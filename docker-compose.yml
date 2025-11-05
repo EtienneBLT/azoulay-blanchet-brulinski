@@ -1,0 +1,17 @@
+services:
+
+  backend:
+    build: ./backend
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend/app:/backend/app
+    restart: always
+
+  database:
+    image: mariadb:10.6
+    restart: always
+    environment:
+      - MARIADB_ROOT_PASSWORD=pwd
+    volumes:
+      - ./database/data:/var/lib/mysql
