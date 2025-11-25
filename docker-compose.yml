@@ -1,9 +1,8 @@
 services:
-
   backend:
     build: ./backend
     ports:
-      - 8000:8000
+      - "8000:8000"
     volumes:
       - ./backend/app:/backend/app
     restart: always
@@ -13,5 +12,8 @@ services:
     restart: always
     environment:
       - MARIADB_ROOT_PASSWORD=pwd
+    ports:
+      - "3306:3306"
     volumes:
       - ./database/data:/var/lib/mysql
+      - ./database/init/dump.sql:/docker-entrypoint-initdb.d/dump.sql
