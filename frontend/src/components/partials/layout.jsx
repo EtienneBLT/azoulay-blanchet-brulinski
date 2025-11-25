@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/lib/utils";
 import {
@@ -51,7 +51,7 @@ export default function Layout({ children, currentPageName }) {
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="md:hidden p-6"
+                            className="md:hidden"
                             onClick={() => setSidebarOpen(!sidebarOpen)}
                         >
                             {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -70,7 +70,7 @@ export default function Layout({ children, currentPageName }) {
 
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="flex items-center gap-3 hover:bg-gray-100 rounded-xl px-3">
+                            <Button variant="ghost" className="flex items-center gap-3 hover:bg-gray-100 rounded-xl py-6">
                                 <div className="text-right hidden sm:block">
                                     <p className="text-sm font-medium text-gray-900">userName</p>
                                     <p className="text-xs text-[#d4af37] capitalize">userRole</p>
