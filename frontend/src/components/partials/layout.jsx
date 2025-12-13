@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useLocation, Link, Outlet } from "react-router-dom";
 import { createPageUrl } from "@/lib/utils";
+import { AnimatePresence, motion } from "framer-motion";
+
 import {
     BookOpen,
     Search,
@@ -12,6 +14,7 @@ import {
     Library,
     ClipboardList
 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -22,7 +25,8 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export default function Layout({ children, currentPageName }) {
+export default function Layout({currentPageName }) {
+    const location = useLocation();
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const navItems = [
@@ -57,7 +61,7 @@ export default function Layout({ children, currentPageName }) {
                             {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                         </Button>
 
-                        <Link to={createPageUrl("BookSearch")} className="flex items-center gap-3">
+                        <Link to={createPageUrl()} className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-xl bg-linear-to-br from-[#1e3a5f] to-[#2d5a8f] flex items-center justify-center">
                                 <BookOpen className="w-5 h-5 text-white" />
                             </div>
@@ -141,9 +145,18 @@ export default function Layout({ children, currentPageName }) {
             )}
 
             {/* Main Content */}
-            <main className="md:ml-64 pt-16 min-h-screen">
+            <main className="md:ml-64 pt-16 min-h-screen overflow-hidden">
                 <div className="p-4 md:p-8">
-                    {children}
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={location.pathname}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                        >
+                            <Outlet />
+                        </motion.div>
+                    </AnimatePresence>
                 </div>
             </main>
         </div>
