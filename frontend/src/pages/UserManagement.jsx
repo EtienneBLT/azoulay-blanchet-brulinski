@@ -1,18 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { UserPlus } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { createApiUrl } from "@/lib/utils";
 import UserStatsCards from "@/components/users/UserStatsCard";
+import UserFilters from "@/components/users/UserFilters";
+import UserTable from "@/components/users/UserTable";
 
 export default function UserManagement() {
-    const { data: users = [] } = useQuery({
+    const [searchQuery, setSearchQuery] = useState("");
+    const [filterRole, setFilterRole] = useState("all");
+    const [editDialogOpen, setEditDialogOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [formData, setFormData] = useState({
+        user_role: "",
+        student_id: "",
+        department: "",
+        phone: "",
+        max_loans: 5
+    });
+
+    const { data: users = [], isLoading } = useQuery({
         queryKey: ["users"],
         queryFn: async () => {
             const res = await axios.get(createApiUrl("Users"));
             return res.data;
         },
+    });
+
+    const openEditDialog = (user) => {
+        setSelectedUser(user);
+        setFormData({
+            role: user.role || "etudiant",
+            id_utilisateur: user.id_utilisateur || "",
+            department: user.department || "",
+            phone: user.phone || "",
+            max_loans: user.max_loans || 5
+        });
+        setEditDialogOpen(true);
+    };
+
+    const filteredUsers = users.filter(user => {
+        const searchLower = searchQuery.toLowerCase();
+        const matchesSearch = !searchQuery ||
+            String(user.id_utilisateur).toLowerCase().includes(searchLower) ||
+            user.nom?.toLowerCase().includes(searchLower) ||
+            user.prenom?.toLowerCase().includes(searchLower) ||
+            user.email?.toLowerCase().includes(searchLower);
+
+        const userRole = user.role;
+        const matchesRole = filterRole === "all" || userRole === filterRole;
+
+        return matchesSearch && matchesRole;
     });
 
     const totalUsers = users.length;
@@ -41,6 +81,19 @@ export default function UserManagement() {
                 totalLibrarians={totalLibrarians}
                 totalTeachers={totalTeachers}
                 totalStudents={totalStudents}
+            />
+
+            <UserFilters
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                filterRole={filterRole}
+                setFilterRole={setFilterRole}
+            />
+
+            <UserTable
+                users={filteredUsers}
+                isLoading={isLoading}
+                onEdit={openEditDialog}
             />
         </div>
     );
