@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import LoanManagement from "./pages/LoanManagement";
 import BookManagement from "./pages/BookManagement";
 import Authentification from "./pages/Authentification";
+import UserManagement from "./pages/UserManagement";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/loanmanagement' element={<LoanManagement />} />
           <Route path='/bookmanagement' element={<BookManagement />} />
+          <Route path='/usermanagement' element={<UserManagement />} />
         </Route>
       </Routes>
     </Router>

@@ -12,7 +12,8 @@ import {
     Menu,
     X,
     Library,
-    ClipboardList
+    ClipboardList,
+    Users2
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -35,6 +36,7 @@ export default function Layout({currentPageName }) {
         { name: "Tableau de Bord", page: "Dashboard", icon: LayoutDashboard, access: "librarian" },
         { name: "Gestion Livres", page: "BookManagement", icon: Library, access: "librarian" },
         { name: "Gestion Emprunts", page: "LoanManagement", icon: ClipboardList, access: "librarian" },
+        { name: "Gestion Utilisateurs", page: "UserManagement", icon: Users2, access: "librarian" },
     ];
 
     const filteredNavItems = navItems.filter(item => {
