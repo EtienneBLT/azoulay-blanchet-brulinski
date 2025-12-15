@@ -69,7 +69,7 @@ export default function UserTable({ users, isLoading, onEdit }) {
                           <div className="flex items-center gap-3">
                             <Avatar className="w-10 h-10 border-2 border-gray-200">
                               <AvatarFallback className="bg-linear-to-br from-[#1e3a5f] to-[#2d5a8f] text-white">
-                                {user.nom?.charAt(0) + user.prenom?.charAt(0) || "UP"}
+                                {user.prenom?.charAt(0) + user.nom?.charAt(0) || "AZ"}
                               </AvatarFallback>
                             </Avatar>
                             <div>
