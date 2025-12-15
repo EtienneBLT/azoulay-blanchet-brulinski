@@ -6,11 +6,13 @@ from sqlalchemy.orm import Session
 
 # Import des routes
 from app.routes import user_routes
+from app.routes import book_routes
 
 app = FastAPI(title="API Bibliothèque")
 
 # Inclusion des routes utilisateurs
 app.include_router(user_routes.router)
+app.include_router(book_routes.router)
 
 # Route racine
 @app.get("/")
