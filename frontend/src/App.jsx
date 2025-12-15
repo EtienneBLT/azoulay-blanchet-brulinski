@@ -5,11 +5,14 @@ import MyLoans from "./pages/MyLoans";
 import Dashboard from "./pages/Dashboard";
 import LoanManagement from "./pages/LoanManagement";
 import BookManagement from "./pages/BookManagement";
+import Authentification from "./pages/Authentification";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path='authentification' element={<Authentification />} />
+        
         <Route element={<Layout />}>
           <Route index element={<Navigate to="/booksearch" replace />} />
           <Route path='/booksearch' element={<BookSearch />} />
