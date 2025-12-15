@@ -33,23 +33,3 @@ class UserOut(UserBase):
     class Config:
         """Configuration pour permettre la conversion depuis un modèle ORM SQLAlchemy."""
         orm_mode = True
-
-# --- Schéma simplifié ---
-class UserSimplifiedOut(BaseModel):
-    """Un schéma de sortie plus simple."""
-    id: int
-    nom_complet: str
-    email: EmailStr
-
-    @classmethod
-    def from_orm(cls, user):
-        """Méthode pour créer l'objet à partir de l'instance SQLAlchemy."""
-        return cls(
-            id=user.id_utilisateur,
-            nom_complet=f"{user.prenom} {user.nom}",
-            email=user.email
-        )
-
-    class Config:
-        # Permet à FastAPI/Pydantic de gérer l'objet ORM
-        orm_mode = True
